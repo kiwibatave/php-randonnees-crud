@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="css/basics.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
-	<a href="/php-pdo/read.php">Liste des données</a>
+	<a href="read.php">Liste des données</a>
 	<h1>Ajouter</h1>
 	<form action="" method="post">
 		<div>
@@ -24,7 +24,7 @@
 				<option value="tres difficile">Très difficile</option>
 			</select>
 		</div>
-		
+
 		<div>
 			<label for="distance">Distance</label>
 			<input type="text" name="distance" value="">
@@ -38,6 +38,48 @@
 			<input type="text" name="height_difference" value="">
 		</div>
 		<button type="submit" name="button">Valider</button>
+
+<?php
+
+include ("connect.php");
+
+if (isset($_POST['name'])){
+
+$_name = $_POST['name'];
+$_difficulty = $_POST['difficulty'];
+$_distance = $_POST['distance'];
+$_duration = $_POST['duration'];
+$_height_difference = $_POST['height_difference'];
+
+$req = $bdd->prepare("INSERT INTO hiking (name, difficulty, distance, duration, height_difference)
+	VALUES (:name, :difficulty, :distance, :duration, :height_difference)");
+
+$req->execute(array(
+
+'name' => $_name,
+'difficulty' => $_difficulty,
+'distance' => $_distance,
+'duration' => $_duration,
+'height_difference' =>$_height_difference
+
+));
+?>
+<script type="text/javascript">
+		alert("La randonnée a été ajoutée avec succès.");
+ </script>
+ <?php
+ // echo "La randonnée a été ajoutée avec succès.";
+
+}
+
+?>
+
+
+
+
+
+
+
 	</form>
 </body>
 </html>
